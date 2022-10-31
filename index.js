@@ -12,6 +12,9 @@ function toHop(array, size, khongTrung) {
                     return;
                 }
             }
+
+            //* NEU NHU M THEM DIEU KIEN THI VIET VAO DAY
+
             if (temp.length === size) {
                 result.push(temp);
                 return;
