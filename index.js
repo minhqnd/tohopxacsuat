@@ -54,10 +54,12 @@ function start() {
         var result = resultTemp.filter(num => num % $('#chiaHetCho').val() == 0);
         $('#resultTong').val(result.length)
         $('#result').val(result)
+        $('#resultTongCacSo').val(tinhTong(result))
     } else {
         var result = toHop(inputArray, size, khongTrung, sauLonHonTruoc, truocLonHonSau).map(a => a.join(''))
         $('#resultTong').val(result.length)
         $('#result').val(result)
+        $('#resultTongCacSo').val(tinhTong(result))
     }
 
 }
@@ -78,6 +80,10 @@ function checkTruocLonHonSau(array) {
     });
 }
 
+
+function tinhTong(array) {
+  return array.reduce((a, b) => a*1 + b*1, 0)
+}
 
 // console.log(checkTruocLonHonSau([5, 4, 3, 4, 1]));
 // console.log(checkSauLonHonTruoc([1, 2, 3, 4, 5]));
