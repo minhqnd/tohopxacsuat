@@ -1,4 +1,4 @@
-function toHop(array, size, khongTrung, sauLonHonTruoc, truocLonHonSau) {
+function toHop(array, size, khongTrung, sauLonHonTruoc, truocLonHonSau, nhoHon, lonHon) {
     function iter(parts) {
         return function (v) {
             var temp = parts.concat(v);
@@ -25,7 +25,22 @@ function toHop(array, size, khongTrung, sauLonHonTruoc, truocLonHonSau) {
                     return
                 }
             }
-            
+
+            var check = temp.join('') * 1
+
+            if (nhoHon) {
+                if (!checkNhoHon(check, $('#nhoHonNumber').val() * 1)) {
+                    return
+                }
+            }
+
+            if (lonHon) {
+                console.log(check);
+                if (!checkLonHon(check, $('#lonHonNumber').val() * 1)) {
+                    return
+                }
+            }
+
             // ket thuc so sanh, push ket qua
             if (temp.length === size) {
                 result.push(temp);
@@ -48,19 +63,21 @@ function start() {
     var khongTrung = $('#khongTrung').is(":checked")
     var sauLonHonTruoc = $('#sauLonHonTruoc').is(":checked")
     var truocLonHonSau = $('#truocLonHonSau').is(":checked")
-
-    if ($('#chiaHet').is(":checked")) {
-        var resultTemp = toHop(inputArray, size, khongTrung, sauLonHonTruoc, truocLonHonSau).map(a => a.join(''))
-        var result = resultTemp.filter(num => num % $('#chiaHetCho').val() == 0);
-        $('#resultTong').val(result.length)
-        $('#result').val(result)
-        $('#resultTongCacSo').val(tinhTong(result))
-    } else {
-        var result = toHop(inputArray, size, khongTrung, sauLonHonTruoc, truocLonHonSau).map(a => a.join(''))
-        $('#resultTong').val(result.length)
-        $('#result').val(result)
-        $('#resultTongCacSo').val(tinhTong(result))
-    }
+    var nhoHon = $('#nhoHon').is(":checked")
+    var lonHon = $('#lonHon').is(":checked")
+    //* split function chia het
+    // if ($('#chiaHet').is(":checked")) {
+    //     var resultTemp = toHop(inputArray, size, khongTrung, sauLonHonTruoc, truocLonHonSau).map(a => a.join(''))
+    //     var result = resultTemp.filter(num => num % $('#chiaHetCho').val() == 0);
+    //     $('#resultTong').val(result.length)
+    //     $('#result').val(result)
+    //     $('#resultTongCacSo').val(tinhTong(result))
+    // } else {
+    var result = toHop(inputArray, size, khongTrung, sauLonHonTruoc, truocLonHonSau, nhoHon, lonHon).map(a => a.join(''))
+    $('#resultTong').val(result.length)
+    $('#result').val(result)
+    $('#resultTongCacSo').val(tinhTong(result))
+    // }
 
 }
 
@@ -82,8 +99,14 @@ function checkTruocLonHonSau(array) {
 
 
 function tinhTong(array) {
-  return array.reduce((a, b) => a*1 + b*1, 0)
+    return array.reduce((a, b) => a * 1 + b * 1, 0)
 }
 
-// console.log(checkTruocLonHonSau([5, 4, 3, 4, 1]));
-// console.log(checkSauLonHonTruoc([1, 2, 3, 4, 5]));
+
+function checkNhoHon(check, nhoHon) {
+    return check <= nhoHon
+}
+
+function checkLonHon(check, lonHon) {
+    return check >= lonHon
+}
